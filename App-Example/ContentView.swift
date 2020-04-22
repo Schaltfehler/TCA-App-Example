@@ -7,15 +7,31 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct ContentView: View {
+    @ObservedObject
+    var viewStore: ViewStore<AppState, AppAction>
+
+    init(store: ViewStore<AppState, AppAction>) {
+        self.viewStore = store
+    }
+
     var body: some View {
-        Text("Hello, World!")
+        Button.init(action: {
+            self.viewStore.send(.buttonTapped)
+        }) {
+            Text("Tapped \(viewStore.count) times")
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
+
     static var previews: some View {
-        ContentView()
+        let appStore = Store.init(initialValue: AppState(),
+                                  reducer: appReducer,
+                                  environment: AppEnvironment())
+        return ContentView(store: appStore.view)
     }
 }

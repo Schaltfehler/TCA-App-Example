@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B63D2466244FE144009BB91D /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63D2465244FE144009BB91D /* AppState.swift */; };
 		B6C45889244F070300D355AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C45888244F070300D355AF /* AppDelegate.swift */; };
 		B6C4588B244F070300D355AF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4588A244F070300D355AF /* SceneDelegate.swift */; };
 		B6C4588D244F070300D355AF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C4588C244F070300D355AF /* ContentView.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B63D2465244FE144009BB91D /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		B6C45885244F070300D355AF /* App-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "App-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6C45888244F070300D355AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6C4588A244F070300D355AF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				B6C45888244F070300D355AF /* AppDelegate.swift */,
 				B6C4588A244F070300D355AF /* SceneDelegate.swift */,
+				B63D2465244FE144009BB91D /* AppState.swift */,
 				B6C4588C244F070300D355AF /* ContentView.swift */,
 				B6C4588E244F070400D355AF /* Assets.xcassets */,
 				B6C45893244F070400D355AF /* LaunchScreen.storyboard */,
@@ -255,6 +258,7 @@
 				B6C45889244F070300D355AF /* AppDelegate.swift in Sources */,
 				B6C4588B244F070300D355AF /* SceneDelegate.swift in Sources */,
 				B6C4588D244F070300D355AF /* ContentView.swift in Sources */,
+				B63D2466244FE144009BB91D /* AppState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
