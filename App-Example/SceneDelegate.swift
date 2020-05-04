@@ -17,10 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
-        let appStore = Store(initialValue: AppState(),
+        let appStore = Store(initialState: AppState(),
                              reducer: appReducer,
                              environment: AppEnvironment())
-        let contentView = ContentView(store: appStore.view)
+        let contentView = ContentView(store: appStore)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

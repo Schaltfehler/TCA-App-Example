@@ -10,18 +10,20 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ContentView: View {
-    @ObservedObject
-    var viewStore: ViewStore<AppState, AppAction>
 
-    init(store: ViewStore<AppState, AppAction>) {
-        self.viewStore = store
+    let store: Store<AppState, AppAction>
+
+    init(store: Store<AppState, AppAction>) {
+        self.store = store
     }
 
     var body: some View {
-        Button.init(action: {
-            self.viewStore.send(.buttonTapped)
-        }) {
-            Text("Tapped \(viewStore.count) times")
+        WithViewStore(store) { viewStore in
+            Button(action: {
+                viewStore.send(.buttonTapped)
+            }) {
+                Text("Tapped \(viewStore.count) times")
+            }
         }
     }
 }
@@ -29,9 +31,9 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
 
     static var previews: some View {
-        let appStore = Store.init(initialValue: AppState(),
-                                  reducer: appReducer,
-                                  environment: AppEnvironment())
-        return ContentView(store: appStore.view)
+        let appStore = Store(initialState: AppState(),
+                             reducer: appReducer,
+                             environment: AppEnvironment())
+        return ContentView(store: appStore)
     }
 }

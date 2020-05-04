@@ -19,7 +19,7 @@ enum AppAction: Equatable {
 
 struct AppEnvironment: Equatable {}
 
-let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment -> [Effect<AppAction>] in
+let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
 
     switch action {
     case .buttonTapped:
@@ -27,6 +27,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     }
 
 
-    return []
+    return .none
 }
 
