@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
+        "package": "swift-case-paths",
+        "repositoryURL": "https://github.com/pointfreeco/swift-case-paths",
+        "state": {
+          "branch": null,
+          "revision": "fb733d87aabb5b053ad782902f2f3d67e0a65ac5",
+          "version": "0.1.1"
+        }
+      },
+      {
         "package": "swift-composable-architecture",
         "repositoryURL": "https://github.com/pointfreeco/swift-composable-architecture",
         "state": {
-          "branch": "master",
-          "revision": "d2240d0e76c1a758dbadbf737ceefc888b2e807c",
-          "version": null
+          "branch": null,
+          "revision": "492126c8f34aff3103635cd392e8fc693ef5f4e3",
+          "version": "0.1.4"
         }
       }
     ]
