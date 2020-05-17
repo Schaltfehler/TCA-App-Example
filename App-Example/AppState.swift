@@ -14,7 +14,7 @@ struct AppState: Equatable {
 }
 
 enum AppAction: Equatable {
-    case buttonTapped
+    case countAction(CountAction)
 }
 
 struct AppEnvironment: Equatable {}
@@ -22,11 +22,21 @@ struct AppEnvironment: Equatable {}
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
 
     switch action {
-    case .buttonTapped:
-        state.count += 1
+    case .countAction(_):
+        print("asd")
     }
 
 
     return .none
 }
 
+// --------------
+
+
+struct CountState: Equatable {
+    var count = 0
+}
+
+enum CountAction: Equatable {
+    case buttonTapped
+}
