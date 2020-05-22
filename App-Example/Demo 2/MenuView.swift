@@ -19,7 +19,6 @@ struct MenuState: Equatable {
             CountUpState(isSyncing: self.isSyncing,
                          count: self.count)
         }
-
         set {
             self.count = newValue.count
             self.isSyncing = newValue.isSyncing
@@ -31,7 +30,6 @@ struct MenuState: Equatable {
             SyncState(count: self.count,
                       isSyncing: self.isSyncing)
         }
-
         set {
             self.count = newValue.count
             self.isSyncing = newValue.isSyncing
@@ -46,6 +44,7 @@ enum MenuAction: Equatable {
 }
 
 struct MenuEnvironment {}
+
 
 let menuReducer = Reducer<MenuState, MenuAction, MenuEnvironment>
     .combine(
@@ -73,6 +72,7 @@ struct MenuView: View {
                 NavigationLink("Count",
                                destination:
                     CountUpView(store:
+                        // scope into MenuState.countState
                         self.store.scope(state: { $0.countState },
                                          action: MenuAction.count)
                     )

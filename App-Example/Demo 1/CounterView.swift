@@ -43,14 +43,18 @@ struct CounterView: View {
                 VStack {
                     Text("\(viewStore.count)")
                         .font(.system(size: 80))
-
+                    
                     HStack {
-                        Button("−") { viewStore.send(.decrement) }
-                            .frame(minWidth: 50, minHeight: 50)
-                            .border(Color.blue, width: 2)
+                        Button("−") {
+                            viewStore.send(.decrement)
+                        }
+                        .frame(minWidth: 50, minHeight: 50)
+                        .border(Color.blue, width: 2)
 
-                        Button("+") { viewStore.send(.increment) }
-                            .frame(minWidth: 50, minHeight: 50)
+                        Button("+") {
+                            viewStore.send(.increment)
+                        }
+                        .frame(minWidth: 50, minHeight: 50)
                         .border(Color.blue, width: 2)
                     }
                     .font(Font.largeTitle)

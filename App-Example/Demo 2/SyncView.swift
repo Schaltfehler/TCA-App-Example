@@ -69,15 +69,17 @@ struct SyncView: View {
             NavigationView {
                 VStack {
                     ActivityIndicator(isAnimating: viewStore.isSyncing,
-                                           style: .large)
+                                      style: .large)
 
                     Text("Current Count: \(viewStore.count)")
-                    .font(Font.largeTitle)
-
-                    Button("Sync") { viewStore.send(.sync) }
-                        .disabled(viewStore.isSyncing)
                         .font(Font.largeTitle)
+
+                    Button("Sync") {
+                        viewStore.send(.sync)
                     }
+                    .disabled(viewStore.isSyncing)
+                    .font(Font.largeTitle)
+                }
                 .navigationBarTitle("Sync Count")
             }
         }

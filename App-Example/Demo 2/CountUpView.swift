@@ -34,8 +34,7 @@ let countUpReducer = Reducer<CountUpState, CountUpAction, CountUpEnvironment> { 
 
 /// CountUpView
 /// Count up on each button tap
-/// Disable Button and show Loadin Spinner when server sync is in progress
-
+/// Disable Button and show Loading Spinner when server sync is in progress
 
 struct CountUpView: View {
 
@@ -51,7 +50,9 @@ struct CountUpView: View {
                     Text("\(viewStore.count)")
                         .font(.system(size: 80))
 
-                    Button("+") { viewStore.send(.countUp) }
+                    Button("+") {
+                        viewStore.send(.countUp)
+                    }
                         .frame(minWidth: 50, minHeight: 50)
                         .border(viewStore.isSyncing ? Color.gray : Color.blue, width: 2)
                         .font(Font.largeTitle)
