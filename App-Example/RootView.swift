@@ -30,7 +30,7 @@ struct RootView: View {
             MenuView(store:
                 Store(initialState: MenuState(),
                       reducer: menuReducer,
-                      environment: MenuEnvironment()
+                      environment: MenuEnvironment.real
                 )
             )
                 .tabItem {

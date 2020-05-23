@@ -55,6 +55,7 @@ let syncReducer = Reducer<SyncState, SyncAction, SyncEnvironment> { state, actio
         return .none
     }
 }
+.debug()
 
 
 /// SyncView

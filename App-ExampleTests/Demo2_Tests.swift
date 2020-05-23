@@ -51,28 +51,30 @@ class Demo2_Tests: XCTestCase {
         )
     }
 
-//    func testMenu() {
-//        let store = TestStore(
-//            initialState: .init(count: 0, isSyncing: false),
-//            reducer: menuReducer,
-//            environment: MenuEnvironment()
-//        )
-//
-//        store.assert(
-//            .send(MenuAction.count(.countUp)) {
-//                $0.count = 1
-//                $0.syncState.count = 1
-//            },
-//            .send(MenuAction.sync(.sync)) {
-//                $0.isSyncing = true
-//                $0.syncState.isSyncing = true
-//                XCTAssert($0.countState.isSyncing)
-//            },
-//            .do { self.scheduler.advance() },
-//            .receive(MenuAction.sync(.syncResponse(4))) {
-//                $0.isSyncing = false
-//                $0.count = 4
-//            }
-//        )
-//    }
+    func testMenu() {
+        let store = TestStore(
+            initialState: .init(count: 0, isSyncing: false),
+            reducer: menuReducer,
+            environment: MenuEnvironment(countUpEnvironment: CountUpEnvironment(),
+                                         syncEnvironment: SyncEnvironment(mainQueue: scheduler.eraseToAnyScheduler(),
+                                                                          syncWithServer: { count in Effect(value: count + 3) }))
+            )
+
+        store.assert(
+            .send(MenuAction.count(.countUp)) {
+                $0.count = 1
+                $0.syncState.count = 1
+            },
+            .send(MenuAction.sync(.sync)) {
+                $0.isSyncing = true
+                $0.syncState.isSyncing = true
+                XCTAssert($0.countState.isSyncing)
+            },
+            .do { self.scheduler.advance() },
+            .receive(MenuAction.sync(.syncResponse(4))) {
+                $0.isSyncing = false
+                $0.count = 4
+            }
+        )
+    }
 }

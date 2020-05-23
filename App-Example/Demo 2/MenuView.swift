@@ -43,7 +43,13 @@ enum MenuAction: Equatable {
     case sync(SyncAction)
 }
 
-struct MenuEnvironment {}
+struct MenuEnvironment {
+    let countUpEnvironment: CountUpEnvironment
+    let syncEnvironment: SyncEnvironment
+
+    static let real = MenuEnvironment(countUpEnvironment: CountUpEnvironment(),
+    syncEnvironment: SyncEnvironment.mock)
+}
 
 
 let menuReducer = Reducer<MenuState, MenuAction, MenuEnvironment>
@@ -51,12 +57,12 @@ let menuReducer = Reducer<MenuState, MenuAction, MenuEnvironment>
         countUpReducer.pullback(
             state: \MenuState.countState,
             action: /MenuAction.count,
-            environment: { _ in CountUpEnvironment() }
+            environment: { $0.countUpEnvironment }
         ),
         syncReducer.pullback(
             state: \MenuState.syncState,
             action: /MenuAction.sync,
-            environment: { _ in SyncEnvironment.mock }
+            environment: { $0.syncEnvironment }
         )
 )
 
@@ -94,6 +100,6 @@ struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
         MenuView(store: Store(initialState: MenuState(),
                               reducer: menuReducer,
-                              environment: MenuEnvironment()))
+                              environment: MenuEnvironment.real))
     }
 }
