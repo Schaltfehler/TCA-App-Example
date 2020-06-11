@@ -18,11 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let windowScene = scene as? UIWindowScene else { return }
 
-        let appStore = Store(initialState: AppState(),
-                             reducer: appReducer,
-                             environment: AppEnvironment())
-
-        let rootView = RootView(store: appStore)
+        let rootView = RootView()
 
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = UIHostingController(rootView: rootView)

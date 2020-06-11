@@ -8,6 +8,7 @@
 
 import XCTest
 import ComposableArchitecture
+import Combine
 @testable import App_Example
 
 class Demo2_Tests: XCTestCase {

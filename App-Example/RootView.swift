@@ -11,8 +11,6 @@ import ComposableArchitecture
 
 struct RootView: View {
 
-    let store: Store<AppState, AppAction>
-
     var body: some View {
         TabView {
             CounterView(
@@ -43,9 +41,6 @@ struct RootView: View {
 
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        let appStore = Store(initialState: AppState(),
-                             reducer: appReducer,
-                             environment: AppEnvironment())
-        return RootView(store: appStore)
+        return RootView()
     }
 }
