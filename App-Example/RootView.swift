@@ -20,20 +20,20 @@ struct RootView: View {
                     environment: CounterEnvironment()
                 )
             )
-                .tabItem {
-                    Image(systemName: "1.square")
-                    Text("Demo 1")
+            .tabItem {
+                Image(systemName: "1.square")
+                Text("Demo 1")
             }
 
             MenuView(store:
                 Store(initialState: MenuState(),
                       reducer: menuReducer,
-                      environment: MenuEnvironment.real
+                      environment: MenuEnvironment.mock
                 )
             )
-                .tabItem {
-                    Image(systemName: "2.square")
-                    Text("Demo 2")
+            .tabItem {
+                Image(systemName: "2.square")
+                Text("Demo 2")
             }
         }
     }

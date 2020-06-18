@@ -25,11 +25,11 @@ let counterReducer = Reducer<CounterState, CounterAction, CounterEnvironment> { 
     switch action {
     case .increment:
         state.count += 1
-        return .none
+        return Effect.none
         
     case .decrement:
         state.count -= 1
-        return .none
+        return Effect.none
     }
 }
 
@@ -38,6 +38,7 @@ struct CounterView: View {
     let store: Store<CounterState, CounterAction>
 
     var body: some View {
+        // Transform a store into an observable view store
         WithViewStore(self.store) { viewStore in
             NavigationView {
                 VStack {

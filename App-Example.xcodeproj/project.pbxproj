@@ -12,6 +12,8 @@
 		A2326EC1246F911B004C1EF3 /* SyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2326EC0246F911B004C1EF3 /* SyncView.swift */; };
 		A2326EC3246FA914004C1EF3 /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2326EC2246FA914004C1EF3 /* ActivityIndicatorView.swift */; };
 		A2326EC52470E601004C1EF3 /* Demo2_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2326EC42470E601004C1EF3 /* Demo2_Tests.swift */; };
+		A25C352E249606D7003D86E2 /* SyncFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25C352D249606D7003D86E2 /* SyncFeature.swift */; };
+		A2E435D324924A8400B7F612 /* UserSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E435D224924A8400B7F612 /* UserSettingsView.swift */; };
 		A2F65D09246E8059009C0069 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A2F65D08246E8059009C0069 /* ComposableArchitecture */; };
 		A2F65D0B246E823A009C0069 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F65D0A246E823A009C0069 /* RootView.swift */; };
 		B6C45889244F070300D355AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C45888244F070300D355AF /* AppDelegate.swift */; };
@@ -62,6 +64,8 @@
 		A2326EC0246F911B004C1EF3 /* SyncView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncView.swift; sourceTree = "<group>"; };
 		A2326EC2246FA914004C1EF3 /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		A2326EC42470E601004C1EF3 /* Demo2_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Demo2_Tests.swift; sourceTree = "<group>"; };
+		A25C352D249606D7003D86E2 /* SyncFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncFeature.swift; sourceTree = "<group>"; };
+		A2E435D224924A8400B7F612 /* UserSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsView.swift; sourceTree = "<group>"; };
 		A2F65D0A246E823A009C0069 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B6C45885244F070300D355AF /* App-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "App-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6C45888244F070300D355AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,11 +111,37 @@
 			isa = PBXGroup;
 			children = (
 				A2326EBE246F85B6004C1EF3 /* MenuView.swift */,
-				A2326EBC246F859A004C1EF3 /* CountUpView.swift */,
-				A2326EC0246F911B004C1EF3 /* SyncView.swift */,
+				A2BCF88F249B9D3D00FDA3F5 /* CountUp */,
+				A2BCF890249B9D4A00FDA3F5 /* Sync */,
 				A2326EC2246FA914004C1EF3 /* ActivityIndicatorView.swift */,
 			);
 			path = "Demo 2";
+			sourceTree = "<group>";
+		};
+		A2BCF88F249B9D3D00FDA3F5 /* CountUp */ = {
+			isa = PBXGroup;
+			children = (
+				A2326EBC246F859A004C1EF3 /* CountUpView.swift */,
+			);
+			path = CountUp;
+			sourceTree = "<group>";
+		};
+		A2BCF890249B9D4A00FDA3F5 /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				A25C352D249606D7003D86E2 /* SyncFeature.swift */,
+				A2326EC0246F911B004C1EF3 /* SyncView.swift */,
+				A2BCF891249B9D5900FDA3F5 /* UserSettings */,
+			);
+			path = Sync;
+			sourceTree = "<group>";
+		};
+		A2BCF891249B9D5900FDA3F5 /* UserSettings */ = {
+			isa = PBXGroup;
+			children = (
+				A2E435D224924A8400B7F612 /* UserSettingsView.swift */,
+			);
+			path = UserSettings;
 			sourceTree = "<group>";
 		};
 		B6C4587C244F070300D355AF = {
@@ -278,9 +308,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2326EBF246F85B6004C1EF3 /* MenuView.swift in Sources */,
+				A25C352E249606D7003D86E2 /* SyncFeature.swift in Sources */,
 				A2326EC1246F911B004C1EF3 /* SyncView.swift in Sources */,
 				B6C45889244F070300D355AF /* AppDelegate.swift in Sources */,
 				B6C4588B244F070300D355AF /* SceneDelegate.swift in Sources */,
+				A2E435D324924A8400B7F612 /* UserSettingsView.swift in Sources */,
 				B6C4588D244F070300D355AF /* CounterView.swift in Sources */,
 				A2326EC3246FA914004C1EF3 /* ActivityIndicatorView.swift in Sources */,
 				A2F65D0B246E823A009C0069 /* RootView.swift in Sources */,
@@ -553,7 +585,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.0;
+				minimumVersion = 0.4.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

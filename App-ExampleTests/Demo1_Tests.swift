@@ -12,21 +12,25 @@ import ComposableArchitecture
 
 class Demo1_Tests: XCTestCase {
 
-  func testCounter() {
-    let store = TestStore(
-        initialState: CounterState(count: 0),
-        reducer: counterReducer,
-        environment: CounterEnvironment()
-    )
+    func testSimpleCounter() {
 
-    store.assert(
-      .send(.increment) {
-        $0.count = 1
-      },
-      .send(.decrement) {
-        $0.count = 0
-      }
-    )
-  }
+        let store = TestStore(
+            initialState: CounterState(count: 0),
+            reducer: counterReducer,
+            environment: CounterEnvironment()
+        )
+
+        store.assert(
+            .send(CounterAction.increment) { (state: inout CounterState) in
+                // set expectation
+                state.count = 1
+            },
+            .send(.increment) {
+                $0.count = 2
+            },
+            .send(.decrement) {
+                $0.count = 1
+            }
+        )
+    }
 }
-

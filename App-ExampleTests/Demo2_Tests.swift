@@ -15,7 +15,7 @@ class Demo2_Tests: XCTestCase {
 
     func testCountUp() {
         let store = TestStore(
-            initialState: CountUpState(isSyncing: false, count: 0),
+            initialState: CountUpState(isSyncing: false, userName: "Freddy", count: 0),
             reducer: countUpReducer,
             environment: CountUpEnvironment()
         )
@@ -52,27 +52,48 @@ class Demo2_Tests: XCTestCase {
         )
     }
 
+    func testUserSettings() {
+        let store = TestStore(
+            initialState: UserSettingsState(name: "Freddy"),
+            reducer: userSettingsReducer,
+            environment: UserSettingsEnvironment()
+        )
+
+        store.assert(
+            .send(.changeName("Freddi")) {
+                $0.name = "Freddi"
+            }
+        )
+    }
+
     func testMenu() {
+
+        let environment = SyncFeatureEnvironment(syncEnvironment:
+            SyncEnvironment(mainQueue: scheduler.eraseToAnyScheduler(),
+                            syncWithServer: { count in Effect(value: count + 3) }
+            ),
+                                                 userSettingsEnvironment: UserSettingsEnvironment()
+        )
+
         let store = TestStore(
             initialState: .init(count: 0, isSyncing: false),
             reducer: menuReducer,
             environment: MenuEnvironment(countUpEnvironment: CountUpEnvironment(),
-                                         syncEnvironment: SyncEnvironment(mainQueue: scheduler.eraseToAnyScheduler(),
-                                                                          syncWithServer: { count in Effect(value: count + 3) }))
-            )
+                                         syncEnvironment:environment )
+        )
 
         store.assert(
             .send(MenuAction.count(.countUp)) {
                 $0.count = 1
                 $0.syncState.count = 1
             },
-            .send(MenuAction.sync(.sync)) {
+            .send(MenuAction.featureSync(SyncFeatureAction.sync(SyncAction.sync)) ) {
                 $0.isSyncing = true
                 $0.syncState.isSyncing = true
                 XCTAssert($0.countState.isSyncing)
             },
             .do { self.scheduler.advance() },
-            .receive(MenuAction.sync(.syncResponse(4))) {
+            .receive(MenuAction.featureSync(.sync(.syncResponse(4)))) {
                 $0.isSyncing = false
                 $0.count = 4
             }
