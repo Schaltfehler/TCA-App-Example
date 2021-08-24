@@ -30,7 +30,7 @@ class Demo2_Tests: XCTestCase {
         )
     }
 
-    let scheduler = DispatchQueue.testScheduler
+    let scheduler = DispatchQueue.test
 
     func testSync() {
         let store = TestStore(
