@@ -1,11 +1,3 @@
-//
-//  SyncFeature.swift
-//  App-Example
-//
-//  Created by Freddy on 2020/06/14.
-//  Copyright © 2020 Frederik Vogel. All rights reserved.
-//
-
 import Foundation
 import ComposableArchitecture
 

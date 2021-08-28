@@ -1,11 +1,3 @@
-//
-//  Demo2_Tests.swift
-//  App-ExampleTests
-//
-//  Created by Freddy on 2020/05/17.
-//  Copyright © 2020 Frederik Vogel. All rights reserved.
-//
-
 import XCTest
 import ComposableArchitecture
 import Combine

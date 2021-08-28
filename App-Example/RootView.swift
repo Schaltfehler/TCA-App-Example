@@ -1,11 +1,3 @@
-//
-//  RootView.swift
-//  App-Example
-//
-//  Created by Freddy on 2020/05/15.
-//  Copyright © 2020 Frederik Vogel. All rights reserved.
-//
-
 import SwiftUI
 import ComposableArchitecture
 

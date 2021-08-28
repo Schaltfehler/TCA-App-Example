@@ -1,11 +1,3 @@
-//
-//  SingleCount.swift
-//  App-Example
-//
-//  Created by Freddy on 2020/05/16.
-//  Copyright © 2020 Frederik Vogel. All rights reserved.
-//
-
 import Foundation
 import ComposableArchitecture
 import SwiftUI

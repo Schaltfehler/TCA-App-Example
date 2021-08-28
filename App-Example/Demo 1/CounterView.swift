@@ -1,11 +1,3 @@
-//
-//  CounterView.swift
-//  App-Example
-//
-//  Created by Frederik Vogel on 2020/04/21.
-//  Copyright © 2020 Frederik Vogel. All rights reserved.
-//
-
 import SwiftUI
 import ComposableArchitecture
 

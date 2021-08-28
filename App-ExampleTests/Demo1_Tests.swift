@@ -1,11 +1,3 @@
-//
-//  App_ExampleTests.swift
-//  App-ExampleTests
-//
-//  Created by Frederik Vogel on 2020/05/04.
-//  Copyright © 2020 Frederik Vogel. All rights reserved.
-//
-
 import XCTest
 import ComposableArchitecture
 @testable import App_Example
