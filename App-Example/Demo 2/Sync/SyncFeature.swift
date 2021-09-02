@@ -53,7 +53,9 @@ enum SyncFeatureAction: Equatable {
 struct SyncFeatureEnvironment {
     let syncEnvironment: SyncEnvironment
     let userSettingsEnvironment: UserSettingsEnvironment
-    
+}
+
+extension SyncFeatureEnvironment {
     static let mock = SyncFeatureEnvironment(syncEnvironment: SyncEnvironment.mock,
                                              userSettingsEnvironment: UserSettingsEnvironment())
 }

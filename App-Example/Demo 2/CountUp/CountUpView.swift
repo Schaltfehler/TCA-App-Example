@@ -54,7 +54,7 @@ struct CountUpView: View {
                     .font(Font.largeTitle)
                     .disabled(viewStore.isSyncing)
                 }
-                .navigationBarTitle("Count Peolpe")
+                .navigationBarTitle("Count People")
             }
         }
     }

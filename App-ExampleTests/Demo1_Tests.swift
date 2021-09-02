@@ -13,7 +13,7 @@ class Demo1_Tests: XCTestCase {
         )
 
         store.assert(
-            .send(CounterAction.increment) { (state: inout CounterState) in
+            TestStore.Step.send(CounterAction.increment) { (state: inout CounterState) in
                 // set expectation
                 state.count = 1
             },

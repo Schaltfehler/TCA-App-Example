@@ -21,7 +21,7 @@ struct MenuState: Equatable {
 
     var syncState: SyncFeatureState {
         get {
-            SyncFeatureState(userName: userName,
+            SyncFeatureState(userName: self.userName,
                              count: self.count,
                              isSyncing: self.isSyncing)
         }
@@ -41,7 +41,9 @@ enum MenuAction: Equatable {
 struct MenuEnvironment {
     let countUpEnvironment: CountUpEnvironment
     let syncEnvironment: SyncFeatureEnvironment
+}
 
+extension MenuEnvironment {
     static let mock = MenuEnvironment(countUpEnvironment: CountUpEnvironment(),
                                       syncEnvironment: SyncFeatureEnvironment.mock)
 }
@@ -89,7 +91,7 @@ struct MenuView: View {
                     ))
                 )
             }
-            .navigationBarTitle("People Count App")
+            .navigationBarTitle("Menu")
         }
     }
 }

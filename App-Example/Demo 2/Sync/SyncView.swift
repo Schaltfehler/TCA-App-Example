@@ -36,8 +36,10 @@ let syncReducer = Reducer<SyncState, SyncAction, SyncEnvironment> { state, actio
         state.isSyncing = true
         return environment
             .syncWithServer(state.count) // Effect<Int, Never>
-            .map( SyncAction.syncResponse ) // create an action with the result; Effect<SyncAction, Never>
-            .receive(on: environment.mainQueue)
+            .map{ count in
+                SyncAction.syncResponse(count)
+            } // create an action with the result; Effect<SyncAction, Never>
+            .receive(on: environment.mainQueue) // Publishers.ReceiveOn<Effect<SyncAction, Never>, AnySchedulerOf<DispatchQueue>>
             .eraseToEffect() // Effect<SyncAction, Never>
 
     case .syncResponse(let count):
@@ -85,7 +87,7 @@ struct SyncView: View {
             Text("Current Count: \(viewStore.count)")
                 .font(Font.largeTitle)
 
-            Button("Sync") {
+            Button("Sync with Server") {
                 self.viewStore.send(.sync)
             }
             .disabled(viewStore.isSyncing)

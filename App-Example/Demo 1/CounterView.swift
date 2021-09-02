@@ -13,7 +13,8 @@ enum CounterAction: Equatable {
 
 struct CounterEnvironment {}
 
-let counterReducer = Reducer<CounterState, CounterAction, CounterEnvironment> { state, action, _ in
+let counterReducer = Reducer<CounterState, CounterAction, CounterEnvironment> { state, action, environment
+                                                            -> ComposableArchitecture.Effect<CounterAction, Never> in
     switch action {
     case .increment:
         state.count += 1

@@ -75,10 +75,10 @@
 		A203F8DC26D7AFD00084674E /* Demo 2 */ = {
 			isa = PBXGroup;
 			children = (
+				A203F8E526D7AFD00084674E /* MenuView.swift */,
 				A203F8DD26D7AFD00084674E /* CountUp */,
 				A203F8DF26D7AFD00084674E /* Sync */,
 				A203F8E426D7AFD00084674E /* ActivityIndicatorView.swift */,
-				A203F8E526D7AFD00084674E /* MenuView.swift */,
 			);
 			name = "Demo 2";
 			path = "../../../otherProjects/TCA-App-Example/App-Example/Demo 2";
@@ -466,13 +466,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"App-Example/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "App-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.App-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.exampel.App-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -486,13 +487,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"App-Example/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "App-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.App-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.exampel.App-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
