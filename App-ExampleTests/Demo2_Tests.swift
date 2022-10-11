@@ -12,14 +12,12 @@ class Demo2_Tests: XCTestCase {
             environment: CountUpEnvironment()
         )
 
-        store.assert(
-            .send(.countUp) {
-                $0.count = 1
-            },
-            .send(.countUp) {
-                $0.count = 2
-            }
-        )
+        store.send(.countUp) {
+            $0.count = 1
+        }
+        store.send(.countUp) {
+            $0.count = 2
+        }
     }
 
     let scheduler = DispatchQueue.test
@@ -28,20 +26,22 @@ class Demo2_Tests: XCTestCase {
         let store = TestStore(
             initialState: SyncState(count: 1, isSyncing: false),
             reducer: syncReducer,
-            environment: SyncEnvironment(mainQueue: scheduler.eraseToAnyScheduler(),
-                                         syncWithServer: { count in Effect(value: count + 3) })
+            environment: SyncEnvironment(
+                mainQueue: scheduler.eraseToAnyScheduler(),
+                syncWithServer: { count in Effect(value: count + 3) }
+            )
         )
 
-        store.assert(
-            .send(SyncAction.sync) {
-                $0.isSyncing = true
-            },
-            .do { self.scheduler.advance() },
-            .receive(SyncAction.syncResponse(4)) {
-                $0.isSyncing = false
-                $0.count = 4
-            }
-        )
+        store.send(SyncAction.sync) {
+            $0.isSyncing = true
+        }
+
+        scheduler.advance()
+
+        store.receive(SyncAction.syncResponse(4)) {
+            $0.isSyncing = false
+            $0.count = 4
+        }
     }
 
     func testUserSettings() {
@@ -51,19 +51,18 @@ class Demo2_Tests: XCTestCase {
             environment: UserSettingsEnvironment()
         )
 
-        store.assert(
-            .send(.changeName("Freddi")) {
-                $0.name = "Freddi"
-            }
-        )
+        store.send(.changeName("Freddi")) {
+            $0.name = "Freddi"
+        }
     }
 
     func testMenu() {
 
         let environment = SyncFeatureEnvironment(syncEnvironment:
-            SyncEnvironment(mainQueue: scheduler.eraseToAnyScheduler(),
-                            syncWithServer: { count in Effect(value: count + 3) }
-            ),
+                                                    SyncEnvironment(
+                                                        mainQueue: scheduler.eraseToAnyScheduler(),
+                                                        syncWithServer: { count in Effect(value: count + 3) }
+                                                    ),
                                                  userSettingsEnvironment: UserSettingsEnvironment()
         )
 
@@ -74,21 +73,22 @@ class Demo2_Tests: XCTestCase {
                                          syncEnvironment:environment )
         )
 
-        store.assert(
-            .send(MenuAction.count(.countUp)) {
-                $0.count = 1
-                $0.syncState.count = 1
-            },
-            .send(MenuAction.featureSync(SyncFeatureAction.sync(SyncAction.sync)) ) {
-                $0.isSyncing = true
-                $0.syncState.isSyncing = true
-                XCTAssert($0.countState.isSyncing)
-            },
-            .do { self.scheduler.advance() },
-            .receive(MenuAction.featureSync(.sync(.syncResponse(4)))) {
-                $0.isSyncing = false
-                $0.count = 4
-            }
-        )
+        store.send(MenuAction.count(.countUp)) {
+            $0.count = 1
+            $0.syncState.count = 1
+        }
+
+        store.send(MenuAction.featureSync(SyncFeatureAction.sync(SyncAction.sync)) ) {
+            $0.isSyncing = true
+            $0.syncState.isSyncing = true
+            XCTAssert($0.countState.isSyncing)
+        }
+
+        scheduler.advance()
+
+        store.receive(MenuAction.featureSync(.sync(.syncResponse(4)))) {
+            $0.isSyncing = false
+            $0.count = 4
+        }
     }
 }

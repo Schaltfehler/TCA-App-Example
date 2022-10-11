@@ -70,7 +70,7 @@ struct SyncView: View {
 
         self.store = store
 
-        let scopedStore = self.store.scope(state: { (featureState: SyncFeatureState) -> SyncState in
+        let scopedStore: Store<SyncState, SyncAction> = self.store.scope(state: { (featureState: SyncFeatureState) -> SyncState in
             return SyncState(syncFeatureState: featureState)
         }) { (action: SyncAction) -> SyncFeatureAction in
             SyncFeatureAction(action: action)
