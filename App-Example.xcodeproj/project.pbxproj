@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A203F8E926D7AFD00084674E /* CountUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203F8DE26D7AFD00084674E /* CountUpView.swift */; };
-		A203F8EA26D7AFD00084674E /* SyncFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203F8E026D7AFD00084674E /* SyncFeature.swift */; };
 		A203F8EB26D7AFD00084674E /* SyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203F8E126D7AFD00084674E /* SyncView.swift */; };
 		A203F8EC26D7AFD00084674E /* UserSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203F8E326D7AFD00084674E /* UserSettingsView.swift */; };
 		A203F8ED26D7AFD00084674E /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203F8E426D7AFD00084674E /* ActivityIndicatorView.swift */; };
@@ -37,7 +36,6 @@
 		A203F8D826D7AFB00084674E /* Demo1_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Demo1_Tests.swift; sourceTree = "<group>"; };
 		A203F8D926D7AFB10084674E /* Demo2_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Demo2_Tests.swift; sourceTree = "<group>"; };
 		A203F8DE26D7AFD00084674E /* CountUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountUpView.swift; sourceTree = "<group>"; };
-		A203F8E026D7AFD00084674E /* SyncFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncFeature.swift; sourceTree = "<group>"; };
 		A203F8E126D7AFD00084674E /* SyncView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncView.swift; sourceTree = "<group>"; };
 		A203F8E326D7AFD00084674E /* UserSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingsView.swift; sourceTree = "<group>"; };
 		A203F8E426D7AFD00084674E /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 		A203F8DF26D7AFD00084674E /* Sync */ = {
 			isa = PBXGroup;
 			children = (
-				A203F8E026D7AFD00084674E /* SyncFeature.swift */,
 				A203F8E126D7AFD00084674E /* SyncView.swift */,
 				A203F8E226D7AFD00084674E /* UserSettings */,
 			);
@@ -129,12 +126,20 @@
 			path = "App-ExampleTests";
 			sourceTree = "<group>";
 		};
+		A2A87F5D28F582F300B34A0E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A2AF920E26D7A5E10033A31C = {
 			isa = PBXGroup;
 			children = (
 				A2AF921926D7A5E10033A31C /* App-Example */,
 				A245DB1126DA4E5800E9C70F /* App-ExampleTests */,
 				A2AF921826D7A5E10033A31C /* Products */,
+				A2A87F5D28F582F300B34A0E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -286,7 +291,6 @@
 			files = (
 				A203F8EB26D7AFD00084674E /* SyncView.swift in Sources */,
 				A203F8EE26D7AFD00084674E /* MenuView.swift in Sources */,
-				A203F8EA26D7AFD00084674E /* SyncFeature.swift in Sources */,
 				A203F8E926D7AFD00084674E /* CountUpView.swift in Sources */,
 				A203F8EF26D7AFD00084674E /* RootView.swift in Sources */,
 				A203F8EC26D7AFD00084674E /* UserSettingsView.swift in Sources */,
@@ -539,7 +543,7 @@
 			repositoryURL = "git@github.com:pointfreeco/swift-composable-architecture.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.25.1;
+				minimumVersion = 0.41.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

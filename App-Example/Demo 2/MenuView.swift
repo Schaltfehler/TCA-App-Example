@@ -1,94 +1,88 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct MenuState: Equatable {
 
-    var count: Int = 0
-    var isSyncing: Bool = false
-    var userName: String = "Freddy"
+struct Menu: ReducerProtocol {
 
-    var countState: CountUpState {
-        get {
-            CountUpState(isSyncing: self.isSyncing,
-                         userName: self.userName,
-                         count: self.count)
+    struct State: Equatable {
+        var count: Int = 0
+        var isSyncing: Bool = false
+        var userName: String = "Freddy"
+
+        var countUpState: CountUp.State {
+            get {
+                .init(isSyncing: self.isSyncing,
+                             userName: self.userName,
+                             count: self.count)
+            }
+            set {
+                self.count = newValue.count
+                self.isSyncing = newValue.isSyncing
+            }
         }
-        set {
-            self.count = newValue.count
-            self.isSyncing = newValue.isSyncing
+
+        var syncState: Sync.State {
+            get {
+                .init(count: count,
+                      isSyncing: isSyncing,
+                      userSettingsState: .init(name: userName))
+            }
+            set {
+                self.count = newValue.count
+                self.isSyncing = newValue.isSyncing
+                self.userName = newValue.userSettingsState.name
+            }
         }
     }
 
-    var syncState: SyncFeatureState {
-        get {
-            SyncFeatureState(userName: self.userName,
-                             count: self.count,
-                             isSyncing: self.isSyncing)
+    enum Action: Equatable {
+        case countUpAction(CountUp.Action)
+        case syncAction(Sync.Action)
+    }
+
+    var body: some ReducerProtocol<State, Action> {
+        Scope(state: \State.countUpState, action: /Action.countUpAction) {
+            CountUp()
         }
-        set {
-            self.userName = newValue.userName
-            self.count = newValue.count
-            self.isSyncing = newValue.isSyncing
+
+        Scope(state: \State.syncState, action: /Action.syncAction) {
+            Sync()
         }
     }
 }
-
-enum MenuAction: Equatable {
-    case count(CountUpAction)
-    case featureSync(SyncFeatureAction)
-}
-
-struct MenuEnvironment {
-    let countUpEnvironment: CountUpEnvironment
-    let syncEnvironment: SyncFeatureEnvironment
-}
-
-extension MenuEnvironment {
-    static let mock = MenuEnvironment(countUpEnvironment: CountUpEnvironment(),
-                                      syncEnvironment: SyncFeatureEnvironment.mock)
-}
-
-let menuReducer = Reducer<MenuState, MenuAction, MenuEnvironment>
-    .combine(
-        countUpReducer.pullback(
-            state: \MenuState.countState,
-            action: /MenuAction.count,
-            environment: { $0.countUpEnvironment }
-        ),
-        syncFeatureReducer.pullback(
-            state: \MenuState.syncState,
-            action: /MenuAction.featureSync,
-            environment: { $0.syncEnvironment }
-        )
-)
-
 
 struct MenuView: View {
 
-    let store: Store<MenuState, MenuAction>
+    let store: StoreOf<Menu>
 
     var body: some View {
-
         NavigationView {
             List {
                 NavigationLink("Count",
                                destination:
-                    CountUpView(store:
-                        // scope into MenuState.countState
-                        self.store.scope(state: { $0.countState },
-                                         action: MenuAction.count)
-                    )
+                                CountUpView(store:
+                                                // Scope the Menu store into Store<CountUp.State, CountUp.Action>
+                                            self.store.scope(
+                                                // state: (Menu.State) -> CountUp.State,
+                                                state: \Menu.State.countUpState,
+                                                // action: (CountUp.Action) -> Menu.Action
+                                                action: Menu.Action.countUpAction
+                                            )
+                                           )
                 )
+
                 NavigationLink("Sync",
                                destination:
-                    SyncView(store:self.store.scope(
-                        state: { (menuState: MenuState) -> SyncFeatureState in
-                            menuState.syncState
-                    },
-                        action: { (localAction: SyncFeatureAction) in
-                            MenuAction.featureSync(localAction)
-                    }
-                    ))
+                                // Scope the Menu store into Store<Sync.State, Sync.Action>
+                                SyncView(store: self.store
+                                    .scope(
+                                        state: { (menuState: Menu.State) -> Sync.State in
+                                            menuState.syncState
+                                        },
+                                        action: { (action: Sync.Action) -> Menu.Action in
+                                            Menu.Action.syncAction(action)
+                                        })
+                                )
                 )
             }
             .navigationBarTitle("Menu")
@@ -98,8 +92,8 @@ struct MenuView: View {
 
 struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView(store: Store(initialState: MenuState(),
-                              reducer: menuReducer,
-                              environment: MenuEnvironment.mock))
+        MenuView(store: Store(initialState: Menu.State(),
+                              reducer: Menu()
+                             ))
     }
 }

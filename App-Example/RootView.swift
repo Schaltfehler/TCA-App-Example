@@ -7,9 +7,10 @@ struct RootView: View {
         TabView {
             CounterView(
                 store: Store(
-                    initialState: CounterState(),
-                    reducer: counterReducer,
-                    environment: CounterEnvironment()
+                    initialState: Counter.State(),
+                    reducer: Counter()
+                    // Demo: Use debug on this reducer to see each action and each state change
+                    //._printChanges()
                 )
             )
             .tabItem {
@@ -17,10 +18,12 @@ struct RootView: View {
                 Text("Demo 1")
             }
 
-            MenuView(store:
-                Store(initialState: MenuState(),
-                      reducer: menuReducer,
-                      environment: MenuEnvironment.mock
+            MenuView(
+                store: Store(
+                    initialState: Menu.State(),
+                    reducer: Menu()
+//                        .signpost()
+                        ._printChanges()
                 )
             )
             .tabItem {

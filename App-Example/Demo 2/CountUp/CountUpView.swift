@@ -2,29 +2,27 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
-struct CountUpState: Equatable {
-    let isSyncing: Bool
-    let userName: String
-    
-    var count: Int
-}
 
-enum CountUpAction: Equatable {
-    case countUp
-}
+struct CountUp: ReducerProtocol {
+    struct State: Equatable {
+        let isSyncing: Bool
+        let userName: String
 
-struct CountUpEnvironment {}
+        var count: Int
+    }
 
-let countUpReducer = Reducer<CountUpState, CountUpAction, CountUpEnvironment> { state, action, _ in
-    switch action {
-    case .countUp:
-        state.count += 1
-        return .none
+    enum Action: Equatable {
+        case countUp
+    }
+
+    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
+        switch action {
+        case .countUp:
+            state.count += 1
+            return .none
+        }
     }
 }
-// Demo: Use debug on this reducer to see each action and each state change
-//.debug()
-
 
 /// CountUpView
 /// Count up on each button tap
@@ -32,7 +30,7 @@ let countUpReducer = Reducer<CountUpState, CountUpAction, CountUpEnvironment> { 
 
 struct CountUpView: View {
     
-    let store: Store<CountUpState, CountUpAction>
+    let store: StoreOf<CountUp>
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
@@ -60,16 +58,10 @@ struct CountUpView: View {
     }
 }
 
-
-#if DEBUG
-
 struct CountUpView_Previews: PreviewProvider {
     static var previews: some View {
-        CountUpView(store: Store(initialState: CountUpState(isSyncing: false, userName: "Freddy", count: 0),
-                                 reducer: countUpReducer,
-                                 environment: CountUpEnvironment())
+        CountUpView(store: Store(initialState: CountUp.State(isSyncing: false, userName: "Freddy", count: 0),
+                                 reducer: CountUp())
         )
     }
 }
-
-#endif

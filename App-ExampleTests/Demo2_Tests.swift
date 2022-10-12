@@ -3,13 +3,13 @@ import ComposableArchitecture
 import Combine
 @testable import App_Example
 
+@MainActor
 class Demo2_Tests: XCTestCase {
 
     func testCountUp() {
         let store = TestStore(
-            initialState: CountUpState(isSyncing: false, userName: "Freddy", count: 0),
-            reducer: countUpReducer,
-            environment: CountUpEnvironment()
+            initialState: CountUp.State(isSyncing: false, userName: "Freddy", count: 0),
+            reducer: CountUp()
         )
 
         store.send(.countUp) {
@@ -20,25 +20,20 @@ class Demo2_Tests: XCTestCase {
         }
     }
 
-    let scheduler = DispatchQueue.test
-
-    func testSync() {
+    func testSync() async {
         let store = TestStore(
-            initialState: SyncState(count: 1, isSyncing: false),
-            reducer: syncReducer,
-            environment: SyncEnvironment(
-                mainQueue: scheduler.eraseToAnyScheduler(),
-                syncWithServer: { count in Effect(value: count + 3) }
-            )
+            initialState: Sync.State(count: 1, isSyncing: false,
+                                     userSettingsState: .init()),
+            reducer: Sync()
         )
 
-        store.send(SyncAction.sync) {
+        store.dependencies.syncClient = .init(fetch: { count in count + 3 })
+
+        _ = await store.send(.sync) {
             $0.isSyncing = true
         }
 
-        scheduler.advance()
-
-        store.receive(SyncAction.syncResponse(4)) {
+        await store.receive(.syncResponse(4)) {
             $0.isSyncing = false
             $0.count = 4
         }
@@ -46,9 +41,8 @@ class Demo2_Tests: XCTestCase {
 
     func testUserSettings() {
         let store = TestStore(
-            initialState: UserSettingsState(name: "Freddy"),
-            reducer: userSettingsReducer,
-            environment: UserSettingsEnvironment()
+            initialState: UserSettings.State(name: "Freddy"),
+            reducer: UserSettings()
         )
 
         store.send(.changeName("Freddi")) {
@@ -56,37 +50,26 @@ class Demo2_Tests: XCTestCase {
         }
     }
 
-    func testMenu() {
-
-        let environment = SyncFeatureEnvironment(syncEnvironment:
-                                                    SyncEnvironment(
-                                                        mainQueue: scheduler.eraseToAnyScheduler(),
-                                                        syncWithServer: { count in Effect(value: count + 3) }
-                                                    ),
-                                                 userSettingsEnvironment: UserSettingsEnvironment()
-        )
-
+    func testMenu() async {
         let store = TestStore(
             initialState: .init(count: 0, isSyncing: false),
-            reducer: menuReducer,
-            environment: MenuEnvironment(countUpEnvironment: CountUpEnvironment(),
-                                         syncEnvironment:environment )
+            reducer: Menu()
         )
 
-        store.send(MenuAction.count(.countUp)) {
+        store.dependencies.syncClient = .init(fetch: { count in count + 3 })
+
+        _ = await store.send(.countUpAction(.countUp)) {
             $0.count = 1
             $0.syncState.count = 1
         }
 
-        store.send(MenuAction.featureSync(SyncFeatureAction.sync(SyncAction.sync)) ) {
+        _ = await store.send(.syncAction(.sync)) {
             $0.isSyncing = true
             $0.syncState.isSyncing = true
-            XCTAssert($0.countState.isSyncing)
+            XCTAssert($0.countUpState.isSyncing)
         }
 
-        scheduler.advance()
-
-        store.receive(MenuAction.featureSync(.sync(.syncResponse(4)))) {
+        await store.receive(.syncAction(.syncResponse(4))) {
             $0.isSyncing = false
             $0.count = 4
         }

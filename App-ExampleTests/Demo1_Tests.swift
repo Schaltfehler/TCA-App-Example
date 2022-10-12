@@ -7,18 +7,17 @@ class Demo1_Tests: XCTestCase {
     func testSimpleCounter() {
         
         let store = TestStore(
-            initialState: CounterState(count: 0),
-            reducer: counterReducer,
-            environment: CounterEnvironment()
+            initialState: Counter.State(count: 0),
+            reducer: Counter()
         )
         
-        store.send(CounterAction.increment) { (state: inout CounterState) in
+        store.send(Counter.Action.increment) { (state: inout Counter.State) in
             // set expectation
             state.count = 1
         }
         
-        store.send(.increment) {
-            $0.count = 2
+        store.send(.increment) { state in
+            state.count = 2
         }
         
         store.send(.decrement) {

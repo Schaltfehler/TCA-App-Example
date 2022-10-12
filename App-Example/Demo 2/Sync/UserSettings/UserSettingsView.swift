@@ -2,33 +2,31 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
-struct UserSettingsState: Equatable {
-    var name = ""
-}
+struct UserSettings: ReducerProtocol {
 
-enum UserSettingsAction: Equatable {
-    case changeName(String)
-}
+    struct State: Equatable {
+        var name = ""
+    }
 
-struct UserSettingsEnvironment { }
+    enum Action: Equatable {
+        case changeName(String)
+    }
 
-
-let userSettingsReducer = Reducer<UserSettingsState, UserSettingsAction, UserSettingsEnvironment> { state, action, environment in
-    switch action {
-    case let .changeName(name):
-        state.name = name
-        return .none
+    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
+        switch action {
+        case let .changeName(name):
+            state.name = name
+            return .none
+        }
     }
 }
-//.debug()
-
 
 /// UserSettingsView
 /// Update your Username
 
 struct UserSettingsView: View {
     
-    let store: Store<UserSettingsState, UserSettingsAction>
+    let store: StoreOf<UserSettings>
     
     var body: some View {
         WithViewStore(self.store) { viewStore in
@@ -40,11 +38,15 @@ struct UserSettingsView: View {
                     TextField(
                         "User Name",
                         text: viewStore.binding(
-                            get: { $0.name },
-                            send: { UserSettingsAction.changeName($0) }
+                            get: {
+                                $0.name
+                            },
+                            send: {
+                                .changeName($0)
+                            }
                         )
                     )
-                        .font(Font.largeTitle)
+                    .font(Font.largeTitle)
                     
                     Spacer()
                 }
@@ -55,17 +57,11 @@ struct UserSettingsView: View {
     }
 }
 
-#if DEBUG
-
 struct UserSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        UserSettingsView(store:
-            Store(initialState: UserSettingsState(name: "Freddy"),
-                  reducer: userSettingsReducer,
-                  environment: UserSettingsEnvironment()
-            )
+        UserSettingsView(store: Store(
+            initialState: UserSettings.State(name: "Freddy"),
+            reducer: UserSettings())
         )
     }
-    
 }
-#endif

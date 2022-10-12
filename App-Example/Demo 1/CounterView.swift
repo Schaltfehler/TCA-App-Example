@@ -2,33 +2,31 @@ import SwiftUI
 import ComposableArchitecture
 
 
-struct CounterState: Equatable {
-    var count = 0
-}
+struct Counter: ReducerProtocol {
+    struct State: Equatable {
+        var count = 0
+    }
 
-enum CounterAction: Equatable {
-    case increment // count up
-    case decrement // count down
-}
+    enum Action: Equatable {
+        case increment // count up
+        case decrement // count down
+    }
 
-struct CounterEnvironment {}
+    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
+        switch action {
+        case .increment:
+            state.count += 1
+            return .none
 
-let counterReducer = Reducer<CounterState, CounterAction, CounterEnvironment> {
-    state, action, environment -> ComposableArchitecture.Effect<CounterAction, Never> in
-    switch action {
-    case .increment:
-        state.count += 1
-        return Effect.none
-        
-    case .decrement:
-        state.count -= 1
-        return Effect.none
+        case .decrement:
+            state.count -= 1
+            return .none
+        }
     }
 }
 
-
 struct CounterView: View {
-    let store: Store<CounterState, CounterAction>
+    let store: StoreOf<Counter>
 
     var body: some View {
         // Transform a store into an observable view store
@@ -63,9 +61,8 @@ struct CounterView_Previews: PreviewProvider {
     static var previews: some View {
         CounterView(
             store: Store(
-                initialState: CounterState(),
-                reducer: counterReducer,
-                environment: CounterEnvironment()
+                initialState: Counter.State(),
+                reducer: Counter()
             )
         )
     }
